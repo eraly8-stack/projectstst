@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Регистрация - SchoolTrade</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        
+        
+        .container {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+                
+
+        .form-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .logo i {
+            font-size: 2.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 15px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-top: 10px;
+        }
+
+                
+
+        .form-body {
+            padding: 40px 30px;
+        }
+
+        .school-badge {
+            display: inline-block;
+            background: #eef2ff;
+            color: #667eea;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            font-weight: 600;
+            text-align: center;
+            width: 100%;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .input-with-icon {
+            position: relative;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        .input-with-icon input,
+        .input-with-icon select {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .input-with-icon input:focus,
+        .input-with-icon select:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+            outline: none;
+        }
+
+        .register-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .register-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: #999;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #e0e0e0;
+        }
+
+        .divider span {
+            padding: 0 15px;
+            font-size: 0.9rem;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+            font-size: 0.95rem;
+        }
+
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+               
+
+        @media (max-width: 480px) {
+            .container {
+                border-radius: 15px;
+            }
+            
+            .form-header {
+                padding: 30px 20px;
+            }
+            
+            .form-body {
+                padding: 30px 20px;
+            }
+            
+            .back-btn {
+                top: 10px;
+                left: 10px;
+                padding: 10px 15px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+
+<body>
+            
+
+    <a href="index.html" class="back-btn">
+        <i class="fas fa-arrow-left"></i>
+        На главную
+    </a>
+
+            
+
+    <div class="container">
+        <div class="form-header">
+            <div class="logo">
+                <i class="fas fa-exchange-alt"></i>
+                <span>SchoolTrade</span>
+            </div>
+            <div class="subtitle">Создай аккаунт и начни обмениваться</div>
+        </div>
+
+        <div class="form-body">
+            <div class="school-badge">Только для учеников школы №123</div>
+
+            <form id="registrationForm">
+                <div class="form-group">
+                    <label for="fullName">Полное имя</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="fullName" placeholder="Алан Кайсаров" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Школьная почта</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" id="email" placeholder="Alan@gmail.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="class">Класс</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                        <select id="class" required>
+                            <option value="">Выберите класс</option>
+                            <option value="5">5 класс</option>
+                            <option value="6">6 класс</option>
+                            <option value="7">7 класс</option>
+                            <option value="8">8 класс</option>
+                            <option value="9">9 класс</option>
+                            <option value="10">10 класс</option>
+                            <option value="11">11 класс</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Пароль</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="password" placeholder="Минимум 6 символов" required minlength="6">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">Подтвердите пароль</label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" id="confirmPassword" placeholder="Повторите пароль" required minlength="6">
+                    </div>
+                </div>
+
+                <button type="submit" class="register-btn">
+                    <i class="fas fa-user-plus"></i>
+                    Зарегистрироваться
+                </button>
+
+                <div class="divider">
+                    <span>Уже есть аккаунт?</span>
+                </div>
+
+                <div class="login-link">
+                    Перейдите на страницу <a href="login.html">входа в аккаунт</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+/* ===============================
+   🔧 FIREBASE INIT (ОСТАВЛЕНО)
+================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyBmkMb2_bK4GzR7zmAaYF8st1SYtYpeEjo",
+  authDomain: "schooltrade-c233f.firebaseapp.com",
+  projectId: "schooltrade-c233f",
+  storageBucket: "schooltrade-c233f.appspot.com",
+  messagingSenderId: "257089782694",
+  appId: "1:257089782694:web:cbf0aee4a75b7fc58b4567"
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const auth = firebase.auth();
+const db   = firebase.firestore();
+
+
+/* ===============================
+   🔴 ИЗМЕНЕНО: строгая проверка почты
+================================ */
+function isValidSchoolEmail(email) {
+  const allowedDomains = [
+    '@school.kz',
+    '@edu.kz',
+    '@nisa.edu.kz'
+  ];
+  return allowedDomains.some(domain => email.endsWith(domain));
+}
+
+
+/* ===============================
+   🔴 ИЗМЕНЕНО: обработка регистрации
+================================ */
+document.getElementById('registrationForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const fullName        = document.getElementById('fullName').value.trim();
+  const email           = document.getElementById('email').value.trim().toLowerCase();
+  const studentClass    = document.getElementById('class').value;
+  const password        = document.getElementById('password').value;
+  const confirmPassword = document.getElementById('confirmPassword').value;
+
+  /* ===== ВАЛИДАЦИЯ ===== */
+  if (!fullName || !email || !studentClass || !password) {
+    alert('❌ Заполните все поля');
+    return;
+  }
+
+  if (!isValidSchoolEmail(email)) {
+    alert('❌ Используйте школьную почту Казахстана (@school.kz, @edu.kz, @nisa.edu.kz)');
+    return;
+  }
+
+  if (password.length < 6) {
+    alert('❌ Пароль минимум 6 символов');
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    alert('❌ Пароли не совпадают');
+    return;
+  }
+
+  const submitBtn = document.querySelector('.register-btn');
+  const originalHTML = submitBtn.innerHTML;
+  submitBtn.innerHTML = '⏳ Создаём аккаунт...';
+  submitBtn.disabled = true;
+
+  try {
+    /* ===== СОЗДАНИЕ АККАУНТА ===== */
+    const cred = await auth.createUserWithEmailAndPassword(email, password);
+    const user = cred.user;
+
+    /* ===== СОЗДАНИЕ ПРОФИЛЯ ===== */
+    await db.collection('users').doc(user.uid).set({
+      uid: user.uid,
+      fullName: fullName,
+      email: email,
+      class: studentClass,
+      school: "Школа Казахстана",
+      points: 100,                 // стартовые баллы
+      itemsCount: 0,
+      exchangesCount: 0,
+      role: "student",
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+
+    submitBtn.innerHTML = '✅ Готово!';
+    submitBtn.style.background = '#4CAF50';
+
+    setTimeout(() => {
+      window.location.href = 'profile-c.html';
+    }, 800);
+
+  } catch (error) {
+    submitBtn.innerHTML = originalHTML;
+    submitBtn.disabled = false;
+
+    let msg = 'Ошибка регистрации';
+
+    if (error.code === 'auth/email-already-in-use') {
+      msg = 'Этот email уже зарегистрирован';
+    } else if (error.code === 'auth/invalid-email') {
+      msg = 'Некорректный email';
+    } else if (error.code === 'auth/weak-password') {
+      msg = 'Слишком слабый пароль';
+    } else if (error.code === 'auth/network-request-failed') {
+      msg = 'Проблемы с интернетом';
+    }
+
+    alert('❌ ' + msg);
+    console.error(error);
+  }
+});
+
+
+/* ===============================
+   🟢 ОСТАВЛЕНО: авто-редирект
+================================ */
+auth.onAuthStateChanged(user => {
+  if (user) {
+    window.location.href = 'profile-c.html';
+  }
+});
+
+console.log('✅ register.js загружен');
+</script>
+</body>
+</html>

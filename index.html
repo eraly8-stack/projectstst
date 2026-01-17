@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SchoolTrade - Меняйся, а не покупай!</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        
+        section {
+            padding: 3rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: #333;
+        }
+
+        
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .step {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .step-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .item-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .item-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .item-image {
+            width: 100%;
+            height: 200px;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+
+        .item-info {
+            padding: 1rem;
+        }
+
+        .item-points {
+            color: #667eea;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .wishlist-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 15px;
+            cursor: pointer;
+            width: 100%;
+            transition:  0.3s ease;
+        }
+
+        .wishlist-btn:hover {
+            background: #764ba2;
+        }
+
+        
+        #wishlist-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .close-btn {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .submit-btn {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-weight: bold;
+        }
+
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+
+        .school-info {
+            font-style: italic;
+            margin-top: 1rem;
+            opacity: 0.8;
+        }
+
+        .profile-icon {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        font-size: 2rem;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+        }
+
+        .profile-icon:hover {
+        transform: scale(1.1);
+        }
+
+
+
+        .news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.news-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-left: 4px solid #667eea;
+}
+
+.news-date {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.news-card h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+.leaderboard-table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.leaderboard-header {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    background: #667eea;
+    color: white;
+    padding: 1rem;
+    font-weight: bold;
+}
+
+.leaderboard-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr 1fr;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+}
+
+.leaderboard-item:last-child {
+    border-bottom: none;
+}
+
+.leaderboard-item.gold {
+    background: #fff9e6;
+    font-weight: bold;
+}
+
+.leaderboard-item.silver {
+    background: #f8f8f8;
+}
+
+.leaderboard-item.bronze {
+    background: #fff0e6;
+}
+
+.time-limited {
+    border: 2px solid #ff6b6b;
+}
+
+.time-badge {
+    background: #ff6b6b;
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+}
+
+.timer {
+    font-weight: bold;
+}
+.login-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: rgb(0, 0, 0);
+    padding: 12px 25px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+.login-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.login-btn i {
+    font-size: 1.1rem;
+}
+
+#school-news {
+    background: #f8f9fa;
+    padding: 60px 20px;
+    margin-top: 40px;
+}
+
+.section-subtitle {
+    text-align: center;
+    color: #666;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+}
+
+.news-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 30px;
+}
+
+.news-card {
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+.news-image {
+    height: 200px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.image-placeholder {
+    font-size: 4rem;
+    opacity: 0.8;
+}
+
+/* Для реальных картинок (раскомментируй когда добавишь) */
+.news-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.news-card:hover .news-image img {
+    transform: scale(1.05);
+}
+
+.news-content {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.news-date {
+    color: #667eea;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+}
+
+.news-date::before {
+    content: "📅";
+    margin-right: 8px;
+}
+
+.news-title {
+    color: #333;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    line-height: 1.4;
+}
+
+.news-text {
+    color: #555;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    flex-grow: 1;
+}
+
+.news-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: auto;
+}
+
+.tag {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+.tag.eco { background: #d4edda; color: #155724; }
+.tag.event { background: #cce5ff; color: #004085; }
+.tag.contest { background: #fff3cd; color: #856404; }
+.tag.art { background: #f8d7da; color: #721c24; }
+.tag.education { background: #e2e3e5; color: #383d41; }
+.tag.trade { background: #d1ecf1; color: #0c5460; }
+.tag.winners { background: #ffeaa7; color: #5d4037; }
+.tag.stats { background: #dfe6e9; color: #2d3436; }
+.tag.holiday { background: #ffd8d8; color: #c62828; }
+.tag.bonus { background: #d0f0c0; color: #2e7d32; }
+.tag.it { background: #d1c4e9; color: #4527a0; }
+.tag.club { background: #bbdefb; color: #1565c0; }
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .news-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .news-card {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 480px) {
+    #school-news {
+        padding: 40px 15px;
+    }
+    
+    .news-content {
+        padding: 20px;
+    }
+    
+    .news-title {
+        font-size: 1.2rem;
+    }
+}
+
+/* Стили для чата */
+#school-chat {
+    background: #f0f2f5;
+    padding: 40px 20px;
+    margin-top: 40px;
+}
+
+.chat-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.chat-messages {
+    height: 300px;
+    overflow-y: auto;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #f8f9fa;
+}
+
+.message {
+    margin-bottom: 12px;
+    padding: 10px 15px;
+    border-radius: 15px;
+    max-width: 70%;
+    word-wrap: break-word;
+}
+
+.message.own {
+    background: #667eea;
+    color: white;
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
+}
+
+.message.other {
+    background: #e9ecef;
+    color: #333;
+    margin-right: auto;
+    border-bottom-left-radius: 5px;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+    opacity: 0.8;
+}
+
+.chat-input-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#chatInput {
+    flex: 1;
+    padding: 12px 15px;
+    border: 2px solid #667eea;
+    border-radius: 25px;
+    font-size: 1rem;
+}
+
+#sendMessageBtn {
+    background: #667eea;
+    color: white;
+    border: none;
+    width: 50px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+#sendMessageBtn:hover {
+    background: #764ba2;
+}
+
+.chat-rules {
+    text-align: center;
+    color: #666;
+    font-size: 0.9rem;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+/* Стили для скроллбара */
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 3px;
+}
+
+.task {
+    padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            background: #667eea;
+            color: white;
+}
+
+    </style>
+</head>
+<body>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    
+
+    <header>
+        <div class="logo">SchoolTrade</div>
+        <div class="tagline">Меняйся, а не покупай! Твоя школьная площадка для обмена вещами</div>
+        
+
+        <div >
+    <a href="register.html" class="login-btn">
+    <i class="fas fa-user-plus"></i>
+    Войти / Регистрация
+    </a>
+    
+</div>
+
+    </header>
+
+    
+    <section id="how-it-works">
+        <h2 class="section-title">Как это работает?</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-icon"><img src="Без названия (4).jpg"></div>
+                <h3>1. Школьная регистрация</h3>
+                <p>Регистрируйся через школьную почту. Только для учеников нашей школы!</p>
+            </div>
+            <div class="step">
+                <div class="step-icon"><img src="images (2).jpg"></div>
+                <h3>2. Выкладывай вещи</h3>
+                <p>Добавляй свои вещи и получай за них баллы</p>
+            </div>
+            <div class="step">
+                <div class="step-icon"><img src="images (3).jpg"></div>
+                <h3>3. Получай за баллы</h3>
+                <p>Забирай чужие вещи, используя накопленные баллы</p>
+            </div>
+        </div>
+        
+    </section>
+
+    <section id="school-news">
+    <h2 class="section-title">Школьные новости и события</h2>
+    <p class="section-subtitle">Будь в курсе всего, что происходит в нашей школе</p>
+    
+    <div class="news-container">
+        
+        <div class="news-card">
+            <div class="news-image">
+                
+               
+                <img src="eko_2.jpg" alt="Эко-неделя в школе">
+                
+            </div>
+            <div class="news-content">
+                <div class="news-date">15 декабря 2024</div>
+                <h3 class="news-title">Эко-неделя "Зеленая школа"</h3>
+                <p class="news-text">В рамках городской программы "ЭкоШкола" у нас проходит неделя экологии. Приноси старые учебники, тетради и канцелярию для переработки. За каждый килограмм макулатуры - 50 баллов в SchoolTrade!</p>
+                <div class="news-tags">
+                    <span class="tag eco">Экология</span>
+                    <span class="tag event">Мероприятие</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="news-card">
+            <div class="news-image">
+                <img src="contest_802.jpg" alt="Конкурс дизайна">
+               
+            </div>
+            <div class="news-content">
+                <div class="news-date">10 декабря 2024</div>
+                <h3 class="news-title">Конкурс дизайна логотипа</h3>
+                <p class="news-text">Объявляем конкурс на лучший дизайн логотипа для SchoolTrade! Победитель получит 500 баллов и сертификат в книжный магазин. Работы принимаем до 25 декабря в кабинете информатики.</p>
+                <div class="news-tags">
+                    <span class="tag contest">Конкурс</span>
+                    <span class="tag art">Творчество</span>
+                </div>
+            </div>
+        </div>
+
+   
+        <div class="news-card">
+            <div class="news-image">
+                <img src="ext,f.jpg" alt="Обмен учебниками">
+               
+            </div>
+            <div class="news-content">
+                <div class="news-date">5 декабря 2024</div>
+                <h3 class="news-title">Ярмарка учебников</h3>
+                <p class="news-text">Готовишься к новому семестру? Приходи на школьную ярмарку учебников! Можешь обменять свои старые учебники на нужные тебе. Особый бонус: при обмене через SchoolTrade получаешь дополнительные баллы.</p>
+                <div class="news-tags">
+                    <span class="tag education">Образование</span>
+                    <span class="tag trade">Обмен</span>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="news-card">
+            <div class="news-image">
+               <img src="Без названия (3).jpg" alt="Победители ноября">
+                
+            </div>
+            <div class="news-content">
+                <div class="news-date">1 декабря 2024</div>
+                <h3 class="news-title">Лучшие трейдеры ноября</h3>
+                <p class="news-text">Поздравляем наших рекордсменов! Айгерим из 9А заработала 650 баллов, обменяв 12 вещей. Дамир из 10Б помог 8 одноклассникам найти нужные учебники. Молодцы! Ждем новых рекордов в декабре.</p>
+                <div class="news-tags">
+                    <span class="tag winners">Победители</span>
+                    <span class="tag stats">Статистика</span>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="news-card">
+            <div class="news-image">
+                 <img src="Novogodnie-podarki-kotorye-besyat-uchitelej.gif" alt="Новогодняя акция">
+              
+            </div>
+            <div class="news-content">
+                <div class="news-date">25 ноября 2024</div>
+                <h3 class="news-title">Новогодняя акция "Подари вторую жизнь"</h3>
+                <p class="news-text">С 1 по 25 декабря дарим двойные баллы за любые зимние вещи: коньки, лыжи, теплую одежду. Также запускаем секцию "Новогодние подарки" - обменивай ненужные вещи на отличные подарки для друзей!</p>
+                <div class="news-tags">
+                    <span class="tag holiday">Праздник</span>
+                    <span class="tag bonus">Бонусы</span>
+                </div>
+            </div>
+        </div>
+
+       
+        <div class="news-card">
+            <div class="news-image">
+                <img src="Без названия.png" alt="IT-клуб">
+                
+            </div>
+            <div class="news-content">
+                <div class="news-date">20 ноября 2024</div>
+                <h3 class="news-title">Открытие IT-клуба</h3>
+                <p class="news-text">В школе открывается IT-клуб! Будем учиться программированию, дизайну и разработке сайтов. Первый проект - улучшение платформы SchoolTrade. Приноси старые компьютеры и комплектующие для клуба и получай баллы!</p>
+                <div class="news-tags">
+                    <span class="tag it">IT</span>
+                    <span class="tag club">Клуб</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <section id="school-news">
+    <h2 class="section-title">Школьные новости</h2>
+    <div class="news-grid">
+        <div class="news-card">
+            <div class="news-date">15.12.2024</div>
+            <h3>Эко-неделя в школе</h3>
+            <p>Приноси старые учебники и получай двойные баллы!</p>
+        </div>
+        <div class="news-card">
+            <div class="news-date">10.12.2024</div>
+            <h3>Новый рекорд</h3>
+            <p>Ая из 8Б набрала 500 баллов за неделю!</p>
+        </div>
+        <div class="news-card">
+            <div class="news-date">05.12.2024</div>
+            <h3>Конкурс дизайна</h3>
+            <p>Придумай логотип для SchoolTrade и получи приз!</p>
+        </div>
+    </div>
+    </section>
+
+   
+    <h2 class="section-title"> Школьный чат</h2>
+    <p class="section-subtitle">Обсуждай, договаривайся, знакомься!</p>
+    
+    <div class="chat-container">
+        <!-- Сообщения чата -->
+        <div class="chat-messages" id="chatMessages">
+            <!-- Сообщения загружаются из Firebase -->
+        </div>
+        
+        <!-- Форма отправки -->
+        <div class="chat-input-container">
+            <input type="text" id="chatInput" placeholder="Напишите сообщение..." maxlength="200">
+            <button id="sendMessageBtn"> ⇧</button>
+        </div>
+        
+        <div class="chat-rules">
+            <small> Правила: Без оскорблений, только по теме школы</small>
+        </div>
+    </div>
+</section>
+
+
+   
+    <section id="items-feed">
+        <h2 class="section-title">Сейчас обменивают</h2>
+        <div class="items-grid">
+    
+        <div class="item-card time-limited">
+        
+        <div class="time-badge"> До конца: <span class="timer" data-time="24:00:00">24:00:00</span></div>
+        <div class="item-info">
+            <h3>Учебник по алгебре</h3>
+            <p>10 класс, почти новый</p>
+            <div class="item-points">50 баллов</div>
+            <button class="wishlist-btn" data-item="Учебник по алгебре">Добавить в корзину желаний</button>
+        </div>
+    </div>
+    
+    
+    <div class="item-card time-limited">
+        
+        <div class="time-badge"> До конца: <span class="timer" data-time="12:30:00">12:30:00</span></div>
+        <div class="item-info">
+            <h3>Игра для PlayStation</h3>
+            <p>The Last of Us, полная версия</p>
+            <div class="item-points">120 баллов</div>
+            <button class="wishlist-btn" data-item="Игра для PlayStation">Добавить в корзину желаний</button>
+        </div>
+    </div>
+    
+    
+    <div class="item-card">
+       
+        <div class="item-info">
+            <h3>Школьная форма</h3>
+            <p>Размер M, отличное состояние</p>
+            <div class="item-points">80 баллов</div>
+            <button class="wishlist-btn" data-item="Школьная форма">Добавить в корзину желаний</button>
+        </div>
+    </div>
+    
+    <div class="item-card">
+        
+        <div class="item-info">
+            <h3>Набор канцелярии</h3>
+            <p>Ручки, карандаши, маркеры</p>
+            <div class="item-points">30 баллов</div>
+            <button class="wishlist-btn" data-item="Набор канцелярии">Добавить в корзину желаний</button>
+        </div>
+    </div>
+    </div>
+
+    </section>
+
+    <section id="leaderboard">
+      <h2 class="section-title">Таблица лидеров</h2>
+  <div class="leaderboard-table">
+    <div class="leaderboard-header">
+      <span>Место</span>
+      <span>Имя</span>
+      <span>Класс</span>
+      <span>Баллы</span>
+    </div>
+
+    <!--  СЮДА БУДУТ ПОДСТАВЛЯТЬСЯ ЛИДЕРЫ -->
+    <div id="leaderboard-list"></div>
+
+  </div>
+    </section>
+
+    
+    <section id="advantages">
+        <h2 class="section-title">В чем сила SchoolTrade?</h2>
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon"></div>
+                <h3>Экология</h3>
+                <p>Повторное использование вещей вместо покупки новых</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon"></div>
+                <h3>Безопасность</h3>
+                <p>Только для учеников нашей школы. Все проверено</p>
+            </div>
+            <div class="feature">
+                <div class="feature-icon"></div>
+                <h3>Экономия</h3>
+                <p>Не нужно покупать всё новое. Экономь семейный бюджет</p>
+            </div>
+        </div>
+    </section>
+
+   
+    <div id="wishlist-modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>Корзина желаний</h2>
+            <p>Вы хотите получить: <strong id="selected-item"></strong></p>
+            <form id="wishlist-form">
+                <div class="form-group">
+                    <label for="name">Ваше имя:</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="class">Ваш класс:</label>
+                    <select id="class" required>
+                        <option value="">Выберите класс</option>
+                        <option value="5">5 класс</option>
+                        <option value="6">6 класс</option>
+                        <option value="7">7 класс</option>
+                        <option value="8">8 класс</option>
+                        <option value="9">9 класс</option>
+                        <option value="10">10 класс</option>
+                        <option value="11">11 класс</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="contact">Контакт для связи:</label>
+                    <input type="text" id="contact" placeholder="Telegram или WhatsApp" required>
+                </div>
+                <button type="submit" class="submit-btn">Отправить заявку</button>
+            </form>
+        </div>
+    </div>
+
+    
+    <footer>
+        <p>SchoolTrade - безопасная площадка для обмена вещами среди школьников</p>
+        <div class="school-info">
+            "Школа №52", г. Уральск<br>
+            Проект одобрен школьным советом 2025
+        </div>
+    </footer>
+
+    <script>
+    const firebaseConfig = {
+    apiKey: "AIzaSyBmkMb2_bK4GzR7zmAaYF8st1SYtYpeEjo",
+    authDomain: "schooltrade-c233f.firebaseapp.com",
+    projectId: "schooltrade-c233f",
+    storageBucket: "schooltrade-c233f.firebasestorage.app",
+    messagingSenderId: "257089782694",
+    appId: "1:257089782694:web:cbf0aee4a75b7fc58b4567"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+
+  // ОДИН нормальный onAuthStateChanged (без циклов)
+  auth.onAuthStateChanged((user) => {
+    const loginBtn = document.querySelector('.login-btn');
+
+    if (user) {
+      loginBtn.innerHTML = ' Мой профиль';
+      loginBtn.href = 'profile-c.html';
+    } else {
+      loginBtn.innerHTML = '<i class="fas fa-user-plus"></i> Войти / Регистрация';
+      loginBtn.href = 'register.html';
+    }
+  });
+
+  // Таймеры
+  function updateTimers() {
+    document.querySelectorAll('.timer').forEach(timer => {
+      let timeString = timer.getAttribute('data-time');
+      if (!timeString) return;
+
+      let [h, m, s] = timeString.split(':').map(Number);
+      let totalSeconds = h * 3600 + m * 60 + s;
+
+      if (totalSeconds > 0) {
+        totalSeconds--;
+        const nh = Math.floor(totalSeconds / 3600);
+        const nm = Math.floor((totalSeconds % 3600) / 60);
+        const ns = totalSeconds % 60;
+
+        const newTime = `${nh.toString().padStart(2,'0')}:${nm.toString().padStart(2,'0')}:${ns.toString().padStart(2,'0')}`;
+        timer.textContent = newTime;
+        timer.setAttribute('data-time', newTime);
+      } else {
+        timer.textContent = 'Время вышло!';
+      }
+    });
+  }
+
+  setInterval(updateTimers, 1000);
+
+  // Wishlist окно
+  const wishlistBtns = document.querySelectorAll('.wishlist-btn');
+  const modal = document.getElementById('wishlist-modal');
+  const closeBtn = document.querySelector('.close-btn');
+  const selectedItem = document.getElementById('selected-item');
+  const wishlistForm = document.getElementById('wishlist-form');
+
+  wishlistBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedItem.textContent = btn.dataset.item;
+      modal.style.display = 'block';
+    });
+  });
+
+  closeBtn.onclick = () => modal.style.display = 'none';
+  window.onclick = e => { if (e.target === modal) modal.style.display = 'none'; };
+
+  wishlistForm.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const item = selectedItem.textContent;
+
+    alert(`Спасибо, ${name}! Ваша заявка на "${item}" отправлена.`);
+
+    wishlistForm.reset();
+    modal.style.display = 'none';
+  });
+
+
+
+  const db = firebase.firestore();
+
+function loadLeaderboard() {
+  const leaderboard = document.getElementById("leaderboard-list");
+  leaderboard.innerHTML = "";
+
+  db.collection("users")
+    .orderBy("points", "desc") // ТВОЁ ПОЛЕ points
+    .limit(10)
+    .get()
+    .then(snapshot => {
+      let place = 1;
+
+      snapshot.forEach(doc => {
+        const user = doc.data();
+
+        let className = "leaderboard-item";
+        if (place === 1) className += " gold";
+        if (place === 2) className += " silver";
+        if (place === 3) className += " bronze";
+
+        leaderboard.innerHTML += `
+          <div class="${className}">
+            <span>${place}</span>
+            <span>${user.fullName || "Без имени"}</span>
+            <span>${user.class || "-"}</span>
+            <span>${user.points || 0}</span>
+          </div>
+        `;
+
+        place++;
+      });
+    })
+    .catch(error => {
+      console.error("Ошибка загрузки лидеров:", error);
+    });
+}
+
+// Загружаем таблицу при заходе на сайт
+loadLeaderboard();
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Проверяем авторизацию для чата
+    firebase.auth().onAuthStateChanged((user) => {
+        if (user) {
+            initChat(user);
+        } else {
+            // Если не авторизован, показываем приглашение войти
+            document.getElementById('chatMessages').innerHTML = `
+                <div style="text-align: center; padding: 50px; color: #666;">
+                    <p> Войдите в аккаунт, чтобы участвовать в чате</p>
+                    <button onclick="window.location.href='login.html'" 
+                            style="background: #667eea; color: white; border: none; padding: 10px 20px; border-radius: 20px; cursor: pointer;">
+                        Войти в аккаунт
+                    </button>
+                </div>
+            `;
+            document.querySelector('.chat-input-container').style.display = 'none';
+        }
+    });
+});
+
+function initChat(user) {
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendMessageBtn');
+
+    // Слушатель обновлений чата
+    db.collection('chat')
+        .orderBy('timestamp', 'asc') // сразу старые → новые
+        .limit(50)
+        .onSnapshot((snapshot) => {
+            chatMessages.innerHTML = '';
+
+            snapshot.forEach(doc => {
+                const msg = doc.data();
+                if (!msg.timestamp) return; // ждём timestamp
+
+                const isOwn = msg.userId === user.uid;
+                const messageDiv = document.createElement('div');
+                messageDiv.className =` message ${isOwn ? 'own' : 'other'}`;
+
+                const time = new Date(msg.timestamp.toMillis())
+                    .toLocaleTimeString([], {
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+
+                messageDiv.innerHTML = `
+                    <div class="message-header">
+                        <strong>${msg.userName}</strong>
+                        <span>${time}</span>
+                    </div>
+                    <div>${msg.text}</div>
+                `;
+
+                chatMessages.appendChild(messageDiv);
+            });
+
+            // Автопрокрутка вниз
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        });
+
+    // Отправка сообщения
+    sendBtn.addEventListener('click', sendMessage);
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+    function sendMessage() {
+        const text = chatInput.value.trim();
+        if (!text) return;
+
+        db.collection('chat').add({
+            text: text,
+            userId: user.uid,
+            userName: user.displayName || user.email.split("@")[0],
+            timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        });
+
+        chatInput.value = '';
+    }
+}
+
+// Тест подключения Firebase с казахстанским контекстом
+console.log('=== SchoolTrade Казахстан ===');
+console.log('Firebase:', firebase.apps.length ? ' Подключен' : ' Не подключен');
+console.log('Локация: Казахстан, г. Алматы');
+
+// Быстрая проверка системы
+setTimeout(async () => {
+    try {
+        const testRef = await db.collection('systemCheck').add({
+            check: 'OK',
+            timestamp: new Date(),
+            location: 'Казахстан, Алматы',
+            project: 'SchoolTrade KZ'
+        });
+        console.log(' Система работает, ID:', testRef.id);
+    } catch (e) {
+        console.warn(' Проверьте Firebase настройки:', e.message);
+    }
+}, 1000);
+
+</script>
+</body>
+</html>

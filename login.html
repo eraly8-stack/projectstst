@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Вход - SchoolTrade</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial; }
+        body { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        
+        .container { background: white; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); max-width: 400px; width: 100%; }
+        
+        .logo { text-align: center; margin-bottom: 30px; font-size: 2rem; color: #667eea; }
+        
+        .form-group { margin-bottom: 20px; }
+        
+        label { display: block; margin-bottom: 5px; font-weight: bold; }
+        
+        input { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem; }
+        
+        input:focus { border-color: #667eea; outline: none; }
+        
+        .login-btn { background: #667eea; color: white; border: none; padding: 15px; border-radius: 8px; width: 100%; font-size: 1rem; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        
+        .login-btn:hover { background: #764ba2; }
+        
+        .links { text-align: center; margin-top: 20px; }
+        
+        a { color: #667eea; text-decoration: none; }
+        
+        a:hover { text-decoration: underline; }
+        
+        .error { background: #ffebee; color: #c62828; padding: 10px; border-radius: 5px; margin-bottom: 15px; display: none; }
+    </style>
+    
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script>
+        
+       
+
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">SchoolTrade</div>
+        
+        <div class="error" id="errorMessage"></div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" placeholder="ваш@school.kz" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="password">Пароль</label>
+                <input type="password" id="password" placeholder="Ваш пароль" required>
+            </div>
+            
+            <button type="submit" class="login-btn">Войти в аккаунт</button>
+        </form>
+        
+        <div class="links">
+            <p>Нет аккаунта? <a href="register.html">Зарегистрироваться</a></p>
+            <p><a href="index.html">← На главную</a></p>
+        </div>
+    </div>
+
+    <script>
+/* ===============================
+   🔧 FIREBASE INIT (ОСТАВЛЕНО)
+================================ */
+const firebaseConfig = {
+  apiKey: "AIzaSyBmkMb2_bK4GzR7zmAaYF8st1SYtYpeEjo",
+  authDomain: "schooltrade-c233f.firebaseapp.com",
+  projectId: "schooltrade-c233f",
+  storageBucket: "schooltrade-c233f.appspot.com",
+  messagingSenderId: "257089782694",
+  appId: "1:257089782694:web:cbf0aee4a75b7fc58b4567"
+};
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const auth = firebase.auth();
+
+
+/* ===============================
+   🔴 ИЗМЕНЕНО: обработка входа
+================================ */
+document.getElementById('loginForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const email = document.getElementById('email').value.trim().toLowerCase();
+  const password = document.getElementById('password').value;
+  const errorDiv = document.getElementById('errorMessage');
+  const submitBtn = document.querySelector('.login-btn');
+
+  errorDiv.style.display = 'none';
+
+  if (!email || !password) {
+    errorDiv.textContent = '❌ Заполните email и пароль';
+    errorDiv.style.display = 'block';
+    return;
+  }
+
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = '⏳ Входим...';
+  submitBtn.disabled = true;
+
+  try {
+    await auth.signInWithEmailAndPassword(email, password);
+
+    submitBtn.textContent = '✅ Успешно!';
+    submitBtn.style.background = '#4CAF50';
+
+    setTimeout(() => {
+      window.location.href = 'profile-c.html';
+    }, 700);
+
+  } catch (error) {
+    submitBtn.textContent = originalText;
+    submitBtn.disabled = false;
+
+    let msg = 'Ошибка входа';
+
+    if (error.code === 'auth/user-not-found') {
+      msg = 'Пользователь не найден';
+    } else if (error.code === 'auth/wrong-password') {
+      msg = 'Неверный пароль';
+    } else if (error.code === 'auth/invalid-email') {
+      msg = 'Некорректный email';
+    } else if (error.code === 'auth/too-many-requests') {
+      msg = 'Слишком много попыток, попробуйте позже';
+    } else if (error.code === 'auth/network-request-failed') {
+      msg = 'Проблемы с интернетом';
+    }
+
+    errorDiv.textContent = '❌ ' + msg;
+    errorDiv.style.display = 'block';
+    console.error(error);
+  }
+});
+
+
+/* ===============================
+   🟢 ОСТАВЛЕНО: авто-редирект
+================================ */
+auth.onAuthStateChanged(user => {
+  if (user && window.location.pathname.includes('login.html')) {
+    window.location.href = 'profile-c.html';
+  }
+});
+
+console.log('✅ login.js загружен');
+</script>
+</body>
+</html>

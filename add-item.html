@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Добавить вещь - SchoolTrade</title>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+    <script>
+        // ТВОЙ КОНФИГ FIREBASE
+        const firebaseConfig = {
+            apiKey: "AIzaSyBmkMb2_bK4GzR7zmAaYF8st1SYtYpeEjo",
+            authDomain: "schooltrade-c233f.firebaseapp.com",
+            projectId: "schooltrade-c233f",
+            storageBucket: "schooltrade-c233f.appspot.com",
+            messagingSenderId: "257089782694",
+            appId: "1:257089782694:web:cbf0aee4a75b7fc58b4567"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .back-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: #764ba2;
+        }
+
+        .page-title {
+            color: #333;
+            font-size: 1.8rem;
+        }
+
+        /* Инструкция */
+        .instructions {
+            background: #eef2ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+            border-left: 4px solid #667eea;
+        }
+
+        .instructions h3 {
+            color: #333;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instructions ul {
+            margin-left: 20px;
+            color: #555;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        /* Форма */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+            font-size: 1.1rem;
+        }
+
+        .required {
+            color: #ff6b6b;
+        }
+
+        .form-input, .form-textarea, .form-select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus, .form-textarea:focus, .form-select:focus {
+            border-color: #667eea;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .emoji-picker {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .emoji-btn {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .emoji-btn:hover {
+            border-color: #667eea;
+            background: #f8f9fa;
+        }
+
+        .emoji-btn.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        .points-slider {
+            width: 100%;
+            margin: 15px 0;
+            -webkit-appearance: none;
+            height: 8px;
+            border-radius: 4px;
+            background: #e0e0e0;
+            outline: none;
+        }
+
+        .points-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .points-value {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .points-explanation {
+            color: #666;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .condition-options {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .condition-btn {
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .condition-btn:hover {
+            border-color: #667eea;
+        }
+
+        .condition-btn.selected {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+
+        /* Предпросмотр */
+        .preview {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 25px 0;
+            border: 2px dashed #ddd;
+        }
+
+        .preview h3 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .preview-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .preview-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .preview-emoji {
+            font-size: 2.5rem;
+            width: 60px;
+            height: 60px;
+            background: #eef2ff;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .preview-points {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .preview-description {
+            color: #555;
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        .preview-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: #eef2ff;
+            color: #667eea;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        /* Кнопки */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .cancel-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 18px;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            background: #5a6268;
+        }
+
+        /* Уведомления */
+        .notification {
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Шапка -->
+        <div class="header">
+            <button class="back-btn" onclick="goBack()">
+                ← Назад
+            </button>
+            <h1 class="page-title">Добавить вещь на обмен</h1>
+        </div>
+
+        <!-- Уведомления -->
+        <div class="notification success" id="successMessage"></div>
+        <div class="notification error" id="errorMessage"></div>
+
+        <!-- Инструкция -->
+        <div class="instructions">
+            <h3>Как правильно описать вещь:</h3>
+            <ul>
+                <li><strong>Название:</strong> Кратко (1-4 слова). Пример: "Учебник по алгебре 10 класс"</li>
+                <li><strong>Описание:</strong> Подробно. Что, какого размера, состояние, год выпуска</li>
+                <li><strong>Состояние:</strong> Честно оцени состояние вещи</li>
+                <li><strong>Баллы:</strong> Чем лучше вещь - тем больше баллов можно просить</li>
+                <li><strong>Эмодзи:</strong> Выберите иконку, которая лучше всего подходит</li>
+            </ul>
+        </div>
+
+        <!-- Форма добавления вещи -->
+        <form id="addItemForm">
+            <!-- Название -->
+            <div class="form-group">
+                <label class="form-label">
+                    Название вещи <span class="required">*</span>
+                </label>
+                <input type="text" class="form-input" id="itemTitle" 
+                       placeholder="Например: Учебник по алгебре, почти новый" 
+                       required maxlength="50">
+                <small style="color: #666;">Максимум 50 символов</small>
+            </div>
+
+            <!-- Эмодзи -->
+            <div class="form-group">
+                <label class="form-label">Выберите иконку:</label>
+                <div class="emoji-picker" id="emojiPicker">
+                    <!-- Эмодзи будут добавлены через JavaScript -->
+                </div>
+                <input type="hidden" id="selectedEmoji" value="📦">
+            </div>
+
+            <!-- Описание -->
+            <div class="form-group">
+                <label class="form-label">
+                    Подробное описание <span class="required">*</span>
+                </label>
+                <textarea class="form-textarea" id="itemDescription" 
+                          placeholder="Опишите вашу вещь подробно:
+- Состояние (новое/б/у/поврежденное)
+- Размер/марка/год выпуска
+- Что входит в комплект
+- Почему отдаете
+- Особенности и недостатки"
+                          required minlength="20" maxlength="500"></textarea>
+                <small style="color: #666;">Минимум 20, максимум 500 символов</small>
+            </div>
+
+            <!-- Состояние -->
+            <div class="form-group">
+                <label class="form-label">
+                    Состояние вещи <span class="required">*</span>
+                </label>
+                <div class="condition-options" id="conditionOptions">
+                    <button type="button" class="condition-btn" data-value="new">Новое</button>
+                    <button type="button" class="condition-btn selected" data-value="good">Отличное</button>
+                    <button type="button" class="condition-btn" data-value="normal">Хорошее</button>
+                    <button type="button" class="condition-btn" data-value="used">Б/у</button>
+                    <button type="button" class="condition-btn" data-value="worn">Потёртое</button>
+                    <button type="button" class="condition-btn" data-value="broken">Требует ремонта</button>
+                </div>
+                <input type="hidden" id="itemCondition" value="good">
+            </div>
+
+            <!-- Категория -->
+            <div class="form-group">
+                <label class="form-label">
+                    Категория <span class="required">*</span>
+                </label>
+                <select class="form-select" id="itemCategory" required>
+                    <option value="">Выберите категорию</option>
+                    <option value="books">Учебники и книги</option>
+                    <option value="clothes">Одежда и обувь</option>
+                    <option value="electronics">Электроника</option>
+                    <option value="games">Игры и игрушки</option>
+                    <option value="sport">Спорт и отдых</option>
+                    <option value="stationery">Канцелярия</option>
+                    <option value="other">Другое</option>
+                </select>
+            </div>
+
+            <!-- Баллы -->
+            <div class="form-group">
+                <label class="form-label">
+                    Стоимость в баллах <span class="required">*</span>
+                </label>
+                <div class="points-value" id="pointsValue">50</div>
+                <input type="range" class="points-slider" id="pointsSlider" 
+                       min="10" max="500" step="10" value="50">
+                <div class="points-explanation">
+                    <div>Совет: новые вещи - 100+ баллов, старые учебники - 20-50 баллов</div>
+                    <div>Средняя цена в системе: 80 баллов</div>
+                </div>
+            </div>
+
+            <!-- Предпросмотр -->
+            <div class="preview">
+                <h3>Предпросмотр карточки:</h3>
+                <div class="preview-card" id="itemPreview">
+                    <div class="preview-header">
+                        <div class="preview-emoji" id="previewEmoji"></div>
+                        <div>
+                            <div class="preview-title" id="previewTitle">Название вещи</div>
+                            <div class="tag" id="previewCondition">Состояние: отличное</div>
+                        </div>
+                    </div>
+                    <div class="preview-points" id="previewPoints">50 баллов</div>
+                    <div class="preview-description" id="previewDescription">
+                        Здесь будет ваше описание...
+                    </div>
+                    <div class="preview-tags">
+                        <div class="tag" id="previewCategory">Категория</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Кнопки -->
+            <div class="action-buttons">
+                <button type="button" class="cancel-btn" onclick="goBack()">
+                    Отмена
+                </button>
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    Выложить на обмен
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+/* ======================================================
+   🟢 SchoolTrade — Add Item (MVP Stable)
+   Firebase v8
+   ====================================================== */
+
+let currentUser = null;
+
+/* ===============================
+   🔐 ПРОВЕРКА АВТОРИЗАЦИИ
+   =============================== */
+document.addEventListener('DOMContentLoaded', () => {
+    auth.onAuthStateChanged(user => {
+        if (!user) {
+            window.location.href = 'index.html';
+            return;
+        }
+
+        currentUser = user;
+        console.log('✅ Авторизован:', user.uid, user.email);
+        initForm();
+    });
+});
+
+/* ===============================
+   🟢 ИНИЦИАЛИЗАЦИЯ ФОРМЫ
+   =============================== */
+function initForm() {
+
+    // 🔧 ИЗМЕНЕНО: фиксированный список эмодзи (единый для проекта)
+    const emojis = ['📦','📚','👕','👟','🎮','⚽','📱','💻','🎒','🎧','⌚','📷'];
+
+    const picker = document.getElementById('emojiPicker');
+    picker.innerHTML = '';
+
+    emojis.forEach((emoji, index) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'emoji-btn';
+        btn.textContent = emoji;
+
+        btn.addEventListener('click', () => selectEmoji(btn, emoji));
+        picker.appendChild(btn);
+
+        if (index === 0) selectEmoji(btn, emoji); // 🟢 дефолт
+    });
+
+    // Состояние
+    document.querySelectorAll('.condition-btn').forEach(btn => {
+        btn.addEventListener('click', () => selectCondition(btn));
+    });
+
+    // Preview listeners
+    ['itemTitle','itemDescription','pointsSlider','itemCategory']
+        .forEach(id => document.getElementById(id).addEventListener('input', updatePreview));
+
+    document.getElementById('addItemForm')
+        .addEventListener('submit', submitItem);
+
+    updatePreview();
+}
+
+/* ===============================
+   😀 ЭМОДЗИ
+   =============================== */
+function selectEmoji(btn, emoji) {
+    document.querySelectorAll('.emoji-btn')
+        .forEach(b => b.classList.remove('selected'));
+
+    btn.classList.add('selected');
+    document.getElementById('selectedEmoji').value = emoji;
+    updatePreview();
+}
+
+/* ===============================
+   📦 СОСТОЯНИЕ ВЕЩИ
+   =============================== */
+function selectCondition(btn) {
+    document.querySelectorAll('.condition-btn')
+        .forEach(b => b.classList.remove('selected'));
+
+    btn.classList.add('selected');
+    document.getElementById('itemCondition').value = btn.dataset.value;
+    updatePreview();
+}
+
+/* ===============================
+   👁️ ПРЕДПРОСМОТР
+   =============================== */
+function updatePreview() {
+    const title = document.getElementById('itemTitle').value || 'Название вещи';
+    const desc  = document.getElementById('itemDescription').value || 'Описание...';
+    const points = document.getElementById('pointsSlider').value;
+    const emoji = document.getElementById('selectedEmoji').value;
+    const cond  = document.getElementById('itemCondition').value;
+    const cat   = document.getElementById('itemCategory').value;
+
+    const conditionMap = {
+        new:'Новое', good:'Отличное', normal:'Хорошее',
+        used:'Б/у', worn:'Потёртое', broken:'Требует ремонта'
+    };
+
+    const categoryMap = {
+        books:'Учебники', clothes:'Одежда', electronics:'Электроника',
+        games:'Игры', sport:'Спорт', stationery:'Канцелярия', other:'Другое'
+    };
+
+    document.getElementById('previewEmoji').textContent = emoji;
+    document.getElementById('previewTitle').textContent = title.slice(0,30);
+    document.getElementById('previewPoints').textContent = `${points} баллов`;
+    document.getElementById('previewDescription').textContent =
+        desc.length > 120 ? desc.slice(0,120)+'…' : desc;
+
+    document.getElementById('previewCondition').textContent =
+        `Состояние: ${conditionMap[cond] || '—'}`;
+
+    document.getElementById('previewCategory').textContent =
+        categoryMap[cat] || 'Категория';
+
+    document.getElementById('pointsValue').textContent = points;
+}
+
+/* ===============================
+   🚀 ОТПРАВКА В FIRESTORE
+   =============================== */
+async function submitItem(e) {
+    e.preventDefault();
+
+    if (!currentUser) return showError('Нет авторизации');
+
+    const title = itemTitle.value.trim();
+    const description = itemDescription.value.trim();
+    const category = itemCategory.value;
+
+    // 🔧 ИЗМЕНЕНО: жёсткая валидация MVP
+    if (title.length < 3) return showError('Название слишком короткое');
+    if (description.length < 20) return showError('Описание минимум 20 символов');
+    if (!category) return showError('Выберите категорию');
+
+    const btn = submitBtn;
+    btn.disabled = true;
+    btn.textContent = '⏳ Сохраняем...';
+
+    // 🟢 ДОБАВЛЕНО: срок жизни объявления (30 дней)
+    const expiresAt = firebase.firestore.Timestamp.fromDate(
+        new Date(Date.now() + 30 * 24 * 60 * 60 * 1000)
+    );
+
+    const itemData = {
+        title,
+        description,
+        emoji: selectedEmoji.value,
+        condition: itemCondition.value,
+        category,
+        points: Number(pointsSlider.value),
+
+        ownerId: currentUser.uid,
+        ownerEmail: currentUser.email,
+
+        status: 'available',
+        views: 0,
+        likes: 0,
+
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        expiresAt // 🟢 ДОБАВЛЕНО
+    };
+
+    try {
+        // 🔧 ИЗМЕНЕНО: атомарное сохранение
+        const itemRef = await db.collection('items').add(itemData);
+
+        await db.collection('users')
+            .doc(currentUser.uid)
+            .set({
+                itemsCount: firebase.firestore.FieldValue.increment(1),
+                lastItemAt: firebase.firestore.FieldValue.serverTimestamp()
+            }, { merge: true });
+
+        showSuccess('✅ Вещь добавлена в обмен!');
+        console.log('📦 Item ID:', itemRef.id);
+
+        setTimeout(() => location.href = 'profile-c.html', 1500);
+
+    } catch (err) {
+        console.error(err);
+        btn.disabled = false;
+        btn.textContent = 'Выложить на обмен';
+        showError('Ошибка: ' + err.message);
+    }
+}
+
+/* ===============================
+   🔔 УВЕДОМЛЕНИЯ
+   =============================== */
+function showSuccess(msg) {
+    successMessage.textContent = msg;
+    successMessage.style.display = 'block';
+    errorMessage.style.display = 'none';
+}
+
+function showError(msg) {
+    errorMessage.textContent = msg;
+    errorMessage.style.display = 'block';
+    successMessage.style.display = 'none';
+}
+
+/* ===============================
+   ⬅️ НАЗАД
+   =============================== */
+function goBack() {
+    window.history.back();
+}
+</script>
+</body>
+</html>

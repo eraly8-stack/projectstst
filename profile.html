@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Мой профиль - SchoolTrade</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        stand {
+        
+
+        }
+
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Шапка профиля */
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .back-button {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            text-decoration: none;
+            font-size: 1.5rem;
+            padding: 0.5rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 4px solid white;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-class {
+            opacity: 0.9;
+            margin-bottom: 1rem;
+        }
+
+        /* Основные секции */
+        .profile-section {
+            background: white;
+            margin: 1rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            color: #333;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #667eea;
+        }
+
+        /* Статистика */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Мои вещи */
+        .items-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .item-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            border: 2px solid #e9ecef;
+        }
+
+        .item-image {
+            width: 60px;
+            height: 60px;
+            background: #ddd;
+            border-radius: 8px;
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .item-points {
+            color: #667eea;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+
+        .status-available {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-reserved {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Достижения */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .achievement-card {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .achievement-icon {
+            width: 60px;
+            height: 60px;
+            background: #667eea;
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .achievement-locked {
+            background: #ccc;
+            opacity: 0.5;
+        }
+
+        /* Корзина желаний */
+        .wishlist-item {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .wishlist-info {
+            flex-grow: 1;
+        }
+
+        .wishlist-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        /* Кнопки действий */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-button {
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .action-button:hover {
+            transform: translateY(-2px);
+        }
+
+        .add-item {
+            background: #667eea;
+            color: white;
+        }
+
+        .edit-profile {
+            background: #6c757d;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Шапка профиля -->
+    <header class="profile-header">
+        <a href="index.html" class="back-button">← Назад</a>
+        <div class="profile-avatar">👤</div>
+        <h1 class="profile-name">алан аланов </h1>
+        <div class="profile-class">8Б класс</div>
+        <div class="profile-points">540 баллов</div>
+    </header>
+
+    <!-- Статистика -->
+    <section class="profile-section">
+        <h2 class="section-title">Моя статистика</h2>
+        <div class="stats-grid">
+            <div class="stat-item">
+                <span class="stat-value">12</span>
+                <span class="stat-label">Обменов</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">8</span>
+                <span class="stat-label">Отдано вещей</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-value">4</span>
+                <span class="stat-label">Получено вещей</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Мои вещи -->
+    <section class="profile-section">
+        <h2 class="section-title">Мои вещи на обмен</h2>
+        <div class="items-grid">
+            <div class="item-card">
+                <div class="item-image">📚</div>
+                <h3>Учебник истории</h3>
+                <div class="item-points">60 баллов</div>
+                <span class="status-badge status-available">Доступно</span>
+            </div>
+            <div class="item-card">
+                <div class="item-image">🎨</div>
+                <h3>Набор красок</h3>
+                <div class="item-points">45 баллов</div>
+                <span class="status-badge status-reserved">Забронировано</span>
+            </div>
+            <div class="item-card">
+                <div class="item-image">⚽</div>
+                <h3>Футбольный мяч</h3>
+                <div class="item-points">90 баллов</div>
+                <span class="status-badge status-available">Доступно</span>
+            </div>
+        </div>
+    </section>
+
+   
+    <section class="profile-section">
+        <h2 class="section-title">Мои желания</h2>
+        <div class="wishlist">
+            <div class="wishlist-item">
+                <div class="wishlist-info">
+                    <strong>Игра для PlayStation</strong>
+                    <div>120 баллов • 9А класс</div>
+                </div>
+                <span class="wishlist-status status-pending">Ожидание</span>
+            </div>
+            <div class="wishlist-item">
+                <div class="wishlist-info">
+                    <strong>Школьная форма</strong>
+                    <div>80 баллов • 7В класс</div>
+                </div>
+                <span class="wishlist-status status-approved">Одобрено</span>
+            </div>
+        </div>
+    </section>
+
+    
+    <section class="profile-section">
+        <h2 class="section-title">Мои достижения</h2>
+        <div class="achievements-grid">
+            <div class="achievement-card">
+                <div class="achievement-icon">🌱</div>
+                <div>Эко-герой</div>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon">⚡</div>
+                <div>Скоростник</div>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon achievement-locked">⭐</div>
+                <div>Супер-трейдер</div>
+            </div>
+            <div class="achievement-card">
+                <div class="achievement-icon achievement-locked">🏆</div>
+                <div>Лидер месяца</div>
+            </div>
+        </div>
+    </section>
+
+    <section class="profile-section">
+        <div class="action-buttons">
+            <button class="action-button add-item">➕ Добавить вещь</button>
+            <button class="action-button edit-profile">✏️ Редактировать профиль</button>
+        </div>
+    </section>
+
+    <script>
+        
+        document.querySelector('.add-item').addEventListener('click', function() {
+            alert('Здесь будет форма добавления новой вещи!');
+        });
+
+        document.querySelector('.edit-profile').addEventListener('click', function() {
+            alert('Здесь будет форма редактирования профиля!');
+        });
+
+      
+    </script>
+</body>
+</html>
